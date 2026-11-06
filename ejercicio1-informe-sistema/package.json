@@ -1,0 +1,11 @@
+{
+  "name": "ejercicio1-informe-sistema",
+  "version": "1.0.0",
+  "main": "sistema.js",
+  "scripts": {
+    "start": "node sistema.js"
+  },
+  "dependencies": {
+    "picocolors": "^1.1.1"
+  }
+}
