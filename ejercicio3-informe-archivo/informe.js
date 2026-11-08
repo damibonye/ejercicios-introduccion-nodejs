@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const pc = require('picocolors');
 
-// Los archivos se guardan en la misma carpeta que este script
+
 const RUTA_INFORME = path.join(__dirname, 'informe.txt');
 const RUTA_HISTORIAL = path.join(__dirname, 'historial.log');
 
@@ -24,15 +24,12 @@ function colorearPorcentaje(porcentaje) {
   return pc.red(texto);
 }
 
-// Devuelve la fecha con formato 2026-11-01 10:32:15
 function fechaActual() {
   const d = new Date();
   const dos = (n) => String(n).padStart(2, '0');
   return `${d.getFullYear()}-${dos(d.getMonth() + 1)}-${dos(d.getDate())} ` +
          `${dos(d.getHours())}:${dos(d.getMinutes())}:${dos(d.getSeconds())}`;
 }
-
-// 1. Recoger los datos en un objeto (sin colores)
 function obtenerDatos() {
   const cpus = os.cpus();
   const total = os.totalmem();
@@ -49,7 +46,6 @@ function obtenerDatos() {
   };
 }
 
-// 2. Construir el informe en TEXTO PLANO (para guardarlo en el archivo)
 function informeTextoPlano(d) {
   return [
     '=== INFORME DEL SISTEMA ===',
@@ -65,7 +61,6 @@ function informeTextoPlano(d) {
   ].join('\n') + '\n';
 }
 
-// 3. Mostrar el informe CON COLORES (solo en consola)
 function mostrarEnConsola(d) {
   const linea = (etiqueta, valor) => console.log('  ' + pc.dim(etiqueta.padEnd(15)) + valor);
   console.log('\n' + pc.bold(pc.cyan('=== INFORME DEL SISTEMA ===')));
@@ -80,15 +75,13 @@ function mostrarEnConsola(d) {
   console.log();
 }
 
-// ---- Programa principal ----
 const datos = obtenerDatos();
 
 mostrarEnConsola(datos);
 
-// informe.txt -> se SOBRESCRIBE en cada ejecución
 fs.writeFileSync(RUTA_INFORME, informeTextoPlano(datos));
 
-// historial.log -> se AÑADE una línea en cada ejecución
+
 const lineaHistorial = `${fechaActual()} | RAM usada: ${Math.round(datos.porcentaje)}%\n`;
 fs.appendFileSync(RUTA_HISTORIAL, lineaHistorial);
 
